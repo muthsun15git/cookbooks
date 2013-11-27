@@ -1,0 +1,69 @@
+{
+  "name": "omsa",
+  "version": "0.1.0",
+  "description": "Installs/Configures Dell OpenManage Server Administator",
+  "long_description": "omsa Cookbook\n============\nInstalls OMSA yum repo on CentOS systems. Installs DELL OpenManager Server Administrator and firmware tools.\n\nMakes use of the yum cookbook for managing repo and gpg keys\n\n\nRequirements\n------------\nCentOS 6.\n\n\nAttributes\n----------\n* `omsa['key']`\n    - URL(S) for gpgkey(s) for repo. currently omsa uses two keys.\n    - Defaults to both dell and libsmbios keys\n\n* `omsa['indep']['exclude']`\n    - An array containing a list of packages to exclude from updates or installs.  Wildcards and shell globs are supported.\n    - Defaults to an empty exclude list.\n\n* `omsa['indep']['installonlypkgs']`\n    - An array containing a list of packages which should only be\n      installed, never updated.\n    - Defaults to an empty install-only list.\n\n* `omsa['indep']['mirrorlist']`\n    - Set the mirrorlist to use in yum.repos.d/dell-omsa-indep.repo\n    - Defaults to Dell omsa indep mirrorlist.\n\n* `omsa['specific']['exclude']`\n    - An array containing a list of packages to exclude from updates or installs.  Wildcards and shell globs are supported.\n    - Defaults to an empty exclude list.\n\n* `omsa['specific']['installonlypkgs']`\n    - An array containing a list of packages which should only be\n      installed, never updated.\n    - Defaults to an empty install-only list.\n\n* `omsa['specific']['mirrorlist']`\n    - Set the mirrorlist to use in yum.repos.d/dell-omsa-specific.repo\n    - Defaults to Dell omsa specific mirrorlist.\n\n\nRecipes\n-------\n### default\nConfigures Dell OMSA hardware indepenedent and hardware specific yum repos and installs yum-dellsysid plugin.\n\n### firmware\nInstalls a set of Dell IE rpms that will allow the use of 'bootstrap_firmware' to find all updatable devices on Dell PowerEdge servers.\n\n### srvadmin\nInstalls all base and optional Server Administrator Features including secure web interface at https://node[:ipaddress]:1311\n\n\nUsage\n-----\nPut `recipe[omsa]` in the run list to configure the OMSA yum repo on your DELL PowerEdge systems.\n\nUse the `omsa::firmware` recipe to install dell firmware tools for updating firmware and bios on your system.\n  manually run `yum install $(bootstrap_firmware)` to download the latest firmware for your system.\n  after downloading firmware, run inventory_firmware, update_firmware, update_firmware --yes\n\nUse the `omsa::srvadmin` recipe to install all base and optional Server Administrator Features including secure web interface at https://node[:ipaddress]:1311 Login with root user and password\n\n\nLicense & Authors\n-----------------\n- Author:: David Meiners (<dmeiners@goldstar.com>)\n\n```text\nCopyright:: 2013 David Meiners\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n```\n",
+  "maintainer": "David Meiners",
+  "maintainer_email": "dmeiners@goldstar.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "centos": ">= 6.0.0"
+  },
+  "dependencies": {
+  	"yum"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+    "omsa/key": {
+      "display_name": "omsa repo gpgkey",
+      "description": "URL(S) for gpgkey(s) for repo. currently omsa uses two keys",
+      "required": "required"
+    },
+    "omsa/indep/exclude": {
+      "display_name": "yum.repos.d/dell-omsa-indep.repo exclude",
+      "description": "List of packages to exclude from updates or installs. This should be an array.  Shell globs using wildcards (eg. * and ?) are allowed.",
+      "required": "optional"
+    },
+    "omsa/indep/installonlypkgs": {
+      "display_name": "yum.repos.d/dell-omsa-indep.repo installonlypkgs",
+      "description": "List of packages that should only ever be installed, never updated. Kernels in particular fall into this category.",
+      "required": "optional"
+    },
+    "omsa/indep/mirrorlist": {
+      "display_name": "yum.repos.d/dell-omsa-indep.repo mirrorlist",
+      "description": "Set the mirrorlist to use in yum.repos.d/dell-omsa-indep.repo",
+      "required": "required"
+    },
+    "omsa/specific/exclude": {
+      "display_name": "yum.repos.d/dell-omsa-specific.repo exclude",
+      "description": "List of packages to exclude from updates or installs. This should be an array.  Shell globs using wildcards (eg. * and ?) are allowed.",
+      "required": "optional"
+    },
+    "omsa/specific/installonlypkgs": {
+      "display_name": "yum.repos.d/dell-omsa-specific.repo installonlypkgs",
+      "description": "List of packages that should only ever be installed, never updated. Kernels in particular fall into this category.",
+      "required": "optional"
+    },
+    "omsa/specific/mirrorlist": {
+      "display_name": "yum.repos.d/dell-omsa-specific.repo mirrorlist",
+      "description": "Set the mirrorlist to use in yum.repos.d/dell-omsa-specific.repo",
+      "required": "required"
+    }
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "omsa": "Configures Dell OMSA hardware indepenedent and hardware specific yum repos and installs yum-dellsysid plugin.",
+    "omsa::firmware": "Installs a set of Dell IE rpms that will allow the use of 'bootstrap_firmware' to find all updatable devices on Dell PowerEdge servers.",
+    "omsa::srvadmin": "Installs all base and optional Server Administrator Features including secure web interface at https://node[:ipaddress]:1311"
+  }
+}
